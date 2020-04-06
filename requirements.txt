@@ -1,0 +1,11 @@
+QT
+Boost
+Zlib
+CGAL
+VTK
+flann
+PCL
+ITK
+FAST
+Lung
+

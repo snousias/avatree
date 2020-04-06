@@ -1,0 +1,32 @@
+<RCC>
+  <qresource prefix="/">
+    <file>fragShader.glsl</file>
+    <file>vertShader.glsl</file>
+  </qresource>
+  <qresource prefix="Icons">
+    <file>favicon.ico</file>
+  </qresource>
+  <qresource prefix="Images">
+    <file>down_arrow.png</file>
+    <file>down_arrow_disabled.png</file>
+    <file>frame.png</file>
+    <file>spindown.png</file>
+    <file>spindown_hover.png</file>
+    <file>spindown_off.png</file>
+    <file>spindown_pressed.png</file>
+    <file>spinup.png</file>
+    <file>spinup_hover.png</file>
+    <file>spinup_off.png</file>
+    <file>spinup_pressed.png</file>
+    <file>up_arrow.png</file>
+    <file>up_arrow_disabled.png</file>
+    <file>H2020logo.png</file>
+    <file>mAClogo.png</file>
+  </qresource>
+  <qresource prefix="Models">
+    <file>cube.obj</file>
+  </qresource>
+  <qresource prefix="QSS">
+    <file>main.qss</file>
+  </qresource>
+</RCC>

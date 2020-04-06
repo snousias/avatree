@@ -1,0 +1,11 @@
+<RCC>
+  <qresource prefix="/">
+    <file>SGPSystemArchitechture2.png</file>
+    <file>SGPSystemArchitechture.png</file>
+    <file>openfile.png</file>
+    <file>remove.png</file>
+    <file>logo_small.png</file>
+    <file>fileopen.png</file>
+    <file>help.png</file>
+  </qresource>
+</RCC>

@@ -1,0 +1,63 @@
+#version 300 es
+
+precision highp float;
+precision highp int;
+precision lowp sampler2D;
+precision lowp samplerCube;
+
+// Input vertex data, different for all executions of this shader.
+layout(location = 0) in vec3 vertexPosition_modelspace;
+layout(location = 1) in vec3 vertexNormal_modelspace;
+layout(location = 2) in vec3 vertexColor;
+
+// Output data will be interpolated for each fragment.
+out vec3 col;
+out vec3 Position_worldspace;
+out vec3 Normal_cameraspace;
+out vec3 EyeDirection_cameraspace;
+out vec3 LightDirection_cameraspace;
+out vec3 LightPosition_worldspace;
+
+// Values that stay constant for the whole mesh.
+uniform mat4 projMatrix;
+uniform mat4 mvMatrix;
+uniform mat4 modelMatrix;
+uniform mat4 viewMatrix;
+uniform mat3 normalMatrix;
+uniform float isWireframe;
+uniform vec3 lightPosition_cameraspace;
+
+void main()
+{
+    // Position of the vertex, in worldspace : M * position
+    Position_worldspace = (modelMatrix * vec4(vertexPosition_modelspace, 1)).xyz;
+    
+    // Vector that goes from the vertex to the camera, in camera space.
+    vec3 vertexPosition_cameraspace = (mvMatrix * vec4(vertexPosition_modelspace, 1)).xyz;
+    EyeDirection_cameraspace = vec3(0,0,0) - vertexPosition_cameraspace;
+    
+    // Vector that goes from the vertex to the light, in camera space.
+    //vec3 LightPosition_cameraspace = (mvMatrix * vec4(lightPosition_worldspace, 1)).xyz;
+    LightDirection_cameraspace = lightPosition_cameraspace + EyeDirection_cameraspace;
+    LightPosition_worldspace = (inverse(viewMatrix) * vec4(lightPosition_cameraspace, 1)).xyz;
+    
+    // Normal of the the vertex, in world space same as camera space since camera does not rotate
+    Normal_cameraspace = normalMatrix * vertexNormal_modelspace;
+    // Normal of the the vertex, in camera space
+    //Normal_cameraspace = (mvMatrix * vec4(vertexNormal_modelspace, 0)).xyz;
+    
+    if (isWireframe > 0.5 )
+    {
+        col = vec3(0.0, 0.0, 0.0);
+        vec4 v = mvMatrix * vec4(vertexPosition_modelspace, 1);
+        v.xyz *= 0.99;
+        // Output position of the vertex, in clip space : MVP * position
+        gl_Position = projMatrix * v;
+    }
+    else
+    {
+        col = vertexColor;
+        // Output position of the vertex, in clip space : MVP * position
+        gl_Position = projMatrix * mvMatrix * vec4(vertexPosition_modelspace, 1);
+    }
+}
